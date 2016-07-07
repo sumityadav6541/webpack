@@ -15,7 +15,7 @@ describe("ConfigTestCases", function() {
 			name: cat,
 			tests: fs.readdirSync(path.join(casesPath, cat)).filter(function(folder) {
 				return folder.indexOf("_") < 0;
-			})
+			}).sort()
 		};
 	});
 	categories.forEach(function(category) {
@@ -23,7 +23,7 @@ describe("ConfigTestCases", function() {
 			category.tests.forEach(function(testName) {
 				var suite = describe(testName, function() {});
 				it(testName + " should compile", function(done) {
-					this.timeout(10000);
+					this.timeout(30000);
 					var testDirectory = path.join(casesPath, category.name, testName);
 					var outputDirectory = path.join(__dirname, "js", "config", category.name, testName);
 					var options = require(path.join(testDirectory, "webpack.config.js"));
@@ -39,6 +39,10 @@ describe("ConfigTestCases", function() {
 					});
 					webpack(options, function(err, stats) {
 						if(err) return done(err);
+						fs.writeFileSync(path.join(outputDirectory, "stats.txt"), stats.toString({
+							reasons: true,
+							errorDetails: true
+						}), "utf-8");
 						var jsonStats = stats.toJson({
 							errorDetails: true
 						});
@@ -53,19 +57,33 @@ describe("ConfigTestCases", function() {
 							return test;
 						}
 
+						var globalContext = {
+							console: console
+						};
+
 						function _require(module) {
-							if(module.substr(0, 2) === "./") {
-								var p = path.join(outputDirectory, module);
+							if(Array.isArray(module) || /^\.\.?\//.test(module)) {
 								var fn;
-								if(options.target === "web") {
-									fn = vm.runInNewContext("(function(require, module, exports, __dirname, __filename, it) {" + fs.readFileSync(p, "utf-8") + "\n})", {}, p);
+								var content;
+								if(Array.isArray(module)) {
+									var p = "...";
+									content = module.map(function(p) {
+										var p = path.join(outputDirectory, p);
+										return fs.readFileSync(p, "utf-8");
+									}).join("\n");
 								} else {
-									fn = vm.runInThisContext("(function(require, module, exports, __dirname, __filename, it) {" + fs.readFileSync(p, "utf-8") + "\n})", p);
+									var p = path.join(outputDirectory, module);
+									content = fs.readFileSync(p, "utf-8");
+								}
+								if(options.target === "web") {
+									fn = vm.runInNewContext("(function(require, module, exports, __dirname, __filename, it, window) {" + content + "\n})", globalContext, p);
+								} else {
+									fn = vm.runInThisContext("(function(require, module, exports, __dirname, __filename, it) {" + content + "\n})", p);
 								}
 								var module = {
 									exports: {}
 								};
-								fn.call(module.exports, _require, module, module.exports, outputDirectory, p, _it);
+								fn.call(module.exports, _require, module, module.exports, outputDirectory, p, _it, globalContext);
 								return module.exports;
 							} else return require(module);
 						}
@@ -81,6 +99,8 @@ describe("ConfigTestCases", function() {
 							// try to load a test file
 							testConfig = require(path.join(testDirectory, "test.config.js"));
 						} catch(e) {}
+
+						if(testConfig.noTests) return process.nextTick(done);
 						for(var i = 0; i < optionsArr.length; i++) {
 							var bundlePath = testConfig.findBundle(i, optionsArr[i]);
 							if(bundlePath) {

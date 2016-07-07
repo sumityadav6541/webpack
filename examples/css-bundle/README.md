@@ -49,16 +49,16 @@ module.exports = {
 
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = installedModules[moduleId] = {
-/******/ 			exports: {},
-/******/ 			id: moduleId,
-/******/ 			loaded: false
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
 /******/ 		};
 
 /******/ 		// Execute the module function
 /******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
 
 /******/ 		// Flag the module as loaded
-/******/ 		module.loaded = true;
+/******/ 		module.l = true;
 
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
@@ -71,30 +71,33 @@ module.exports = {
 /******/ 	// expose the module cache
 /******/ 	__webpack_require__.c = installedModules;
 
+/******/ 	// identity function for calling harmory imports with the correct context
+/******/ 	__webpack_require__.i = function(value) { return value; };
+
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "js/";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(0);
+/******/ 	return __webpack_require__(__webpack_require__.s = 1);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
-/*!********************!*\
-  !*** ./example.js ***!
-  \********************/
-/***/ function(module, exports, __webpack_require__) {
-
-	__webpack_require__(/*! ./style.css */ 1);
-
-/***/ },
-/* 1 */
 /*!*******************!*\
   !*** ./style.css ***!
   \*******************/
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
+
+/***/ },
+/* 1 */
+/*!********************!*\
+  !*** ./example.js ***!
+  \********************/
+/***/ function(module, exports, __webpack_require__) {
+
+	__webpack_require__(/*! ./style.css */ 0);
 
 /***/ }
 /******/ ]);
@@ -113,53 +116,53 @@ body {
 ## Uncompressed
 
 ```
-Hash: 6511a21f95bc1fb98aa5
-Version: webpack 1.9.10
-Time: 333ms
+Hash: efccfc86a9d3318458a7
+Version: webpack 2.1.0-beta.11
+Time: 655ms
                                Asset       Size  Chunks             Chunk Names
 ce21cbdd9b894e6af794813eb3fdaf60.png  119 bytes          [emitted]  
-                           output.js     1.7 kB       0  [emitted]  main
+                           output.js    1.87 kB       0  [emitted]  main
                            style.css   69 bytes       0  [emitted]  main
 chunk    {0} output.js, style.css (main) 64 bytes [rendered]
-    > main [0] ./example.js 
-    [0] ./example.js 23 bytes {0} [built]
-    [1] ./style.css 41 bytes {0} [built]
-        cjs require ./style.css [0] ./example.js 1:0-22
+    > main [1] ./example.js 
+    [0] ./style.css 41 bytes {0} [built]
+        cjs require ./style.css [1] ./example.js 1:0-22
+    [1] ./example.js 23 bytes {0} [built]
 Child extract-text-webpack-plugin:
                                    Asset       Size  Chunks             Chunk Names
     ce21cbdd9b894e6af794813eb3fdaf60.png  119 bytes          [emitted]  
-    chunk    {0} extract-text-webpack-plugin-output-filename 1.77 kB [rendered]
-        > [0] (webpack)/~/css-loader!./style.css 
-        [0] (webpack)/~/css-loader!./style.css 184 bytes {0} [built]
-        [1] (webpack)/~/css-loader/lib/css-base.js 1.51 kB {0} [built]
-            cjs require ./../../node_modules/css-loader/lib/css-base.js [0] (webpack)/~/css-loader!./style.css 1:27-85
-        [2] ./image.png 81 bytes {0} [built]
-            cjs require ./image.png [0] (webpack)/~/css-loader!./style.css 2:56-78
+    chunk    {0} extract-text-webpack-plugin-output-filename 1.81 kB [rendered]
+        > [2] (webpack)/~/css-loader!./style.css 
+        [0] (webpack)/~/css-loader/lib/css-base.js 1.51 kB {0} [built]
+            cjs require ./../../node_modules/css-loader/lib/css-base.js [2] (webpack)/~/css-loader!./style.css 1:27-85
+        [1] ./image.png 82 bytes {0} [built]
+            cjs require ./image.png [2] (webpack)/~/css-loader!./style.css 6:58-80
+        [2] (webpack)/~/css-loader!./style.css 224 bytes {0} [built]
 ```
 
 ## Minimized (uglify-js, no zip)
 
 ```
-Hash: f429175fc77e526a48ea
-Version: webpack 1.9.10
-Time: 425ms
+Hash: 6f441b96253266f73216
+Version: webpack 2.1.0-beta.11
+Time: 676ms
                                Asset       Size  Chunks             Chunk Names
 ce21cbdd9b894e6af794813eb3fdaf60.png  119 bytes          [emitted]  
-                           output.js  243 bytes       0  [emitted]  main
+                           output.js  262 bytes       0  [emitted]  main
                            style.css   61 bytes       0  [emitted]  main
 chunk    {0} output.js, style.css (main) 64 bytes [rendered]
-    > main [0] ./example.js 
-    [0] ./example.js 23 bytes {0} [built]
-    [1] ./style.css 41 bytes {0} [built]
-        cjs require ./style.css [0] ./example.js 1:0-22
+    > main [1] ./example.js 
+    [0] ./style.css 41 bytes {0} [built]
+        cjs require ./style.css [1] ./example.js 1:0-22
+    [1] ./example.js 23 bytes {0} [built]
 Child extract-text-webpack-plugin:
                                    Asset       Size  Chunks             Chunk Names
     ce21cbdd9b894e6af794813eb3fdaf60.png  119 bytes          [emitted]  
-    chunk    {0} extract-text-webpack-plugin-output-filename 1.76 kB [rendered]
-        > [0] (webpack)/~/css-loader!./style.css 
-        [0] (webpack)/~/css-loader!./style.css 171 bytes {0} [built]
-        [1] (webpack)/~/css-loader/lib/css-base.js 1.51 kB {0} [built]
-            cjs require ./../../node_modules/css-loader/lib/css-base.js [0] (webpack)/~/css-loader!./style.css 1:27-85
-        [2] ./image.png 81 bytes {0} [built]
-            cjs require ./image.png [0] (webpack)/~/css-loader!./style.css 2:48-70
+    chunk    {0} extract-text-webpack-plugin-output-filename 1.8 kB [rendered]
+        > [2] (webpack)/~/css-loader!./style.css 
+        [0] (webpack)/~/css-loader/lib/css-base.js 1.51 kB {0} [built]
+            cjs require ./../../node_modules/css-loader/lib/css-base.js [2] (webpack)/~/css-loader!./style.css 1:27-85
+        [1] ./image.png 82 bytes {0} [built]
+            cjs require ./image.png [2] (webpack)/~/css-loader!./style.css 6:50-72
+        [2] (webpack)/~/css-loader!./style.css 211 bytes {0} [built]
 ```

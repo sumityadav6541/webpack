@@ -2,11 +2,15 @@
 var should = require("should");
 var path = require("path");
 var fs = require("fs");
+var mkdirp = require("mkdirp");
 
 var webpack = require("../lib/webpack");
 
 var base = path.join(__dirname, "statsCases");
-var tests = fs.readdirSync(base);
+var outputBase = path.join(__dirname, "js", "stats");
+var tests = fs.readdirSync(base).filter(function(testName) {
+	return fs.existsSync(path.join(base, testName, "index.js"))
+});
 var Stats = require("../lib/Stats");
 
 describe("Stats", function() {
@@ -23,22 +27,12 @@ describe("Stats", function() {
 			}
 			(Array.isArray(options) ? options : [options]).forEach(function(options) {
 				options.context = path.join(base, testName);
+				options.output = options.output || {};
+				options.output.path = path.join(outputBase, testName);
 			});
 			var c = webpack(options);
-			var files = {};
 			var compilers = c.compilers ? c.compilers : [c];
 			compilers.forEach(function(c) {
-				c.outputFileSystem = {
-					join: path.join.bind(path),
-					mkdirp: function(path, callback) {
-						callback();
-					},
-					writeFile: function(name, content, callback) {
-						files[name] = content.toString("utf-8");
-						callback();
-					}
-				};
-
 				var ifs = c.inputFileSystem;
 				c.inputFileSystem = Object.create(ifs);
 				c.inputFileSystem.readFile = function() {
@@ -165,6 +159,7 @@ describe("Stats", function() {
 					chunkModules: false,
 					errorDetails: true,
 					reasons: false,
+					usedExports: false,
 					colors: true
 				});
 			});
@@ -186,6 +181,7 @@ describe("Stats", function() {
 					chunks: false,
 					modules: false,
 					reasons: false,
+					usedExports: false,
 					children: false,
 					source: false,
 					errors: false,

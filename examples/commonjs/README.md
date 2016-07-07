@@ -51,16 +51,16 @@ exports.add = function() {
 
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = installedModules[moduleId] = {
-/******/ 			exports: {},
-/******/ 			id: moduleId,
-/******/ 			loaded: false
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
 /******/ 		};
 
 /******/ 		// Execute the module function
 /******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
 
 /******/ 		// Flag the module as loaded
-/******/ 		module.loaded = true;
+/******/ 		module.l = true;
 
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
@@ -73,26 +73,18 @@ exports.add = function() {
 /******/ 	// expose the module cache
 /******/ 	__webpack_require__.c = installedModules;
 
+/******/ 	// identity function for calling harmory imports with the correct context
+/******/ 	__webpack_require__.i = function(value) { return value; };
+
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "js/";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(0);
+/******/ 	return __webpack_require__(__webpack_require__.s = 1);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
-/*!********************!*\
-  !*** ./example.js ***!
-  \********************/
-/***/ function(module, exports, __webpack_require__) {
-
-	var inc = __webpack_require__(/*! ./increment */ 1).increment;
-	var a = 1;
-	inc(a); // 2
-
-/***/ },
-/* 1 */
 /*!**********************!*\
   !*** ./increment.js ***!
   \**********************/
@@ -102,6 +94,17 @@ exports.add = function() {
 	exports.increment = function(val) {
 	    return add(val, 1);
 	};
+
+/***/ },
+/* 1 */
+/*!********************!*\
+  !*** ./example.js ***!
+  \********************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var inc = __webpack_require__(/*! ./increment */ 0).increment;
+	var a = 1;
+	inc(a); // 2
 
 /***/ },
 /* 2 */
@@ -127,33 +130,33 @@ exports.add = function() {
 ## Uncompressed
 
 ```
-Hash: f20c1cdaf768293603f5
-Version: webpack 1.9.10
-Time: 69ms
+Hash: 604c5c1fe4f4a9772853
+Version: webpack 2.1.0-beta.11
+Time: 94ms
     Asset     Size  Chunks             Chunk Names
-output.js  2.15 kB       0  [emitted]  main
+output.js  2.32 kB       0  [emitted]  main
 chunk    {0} output.js (main) 329 bytes [rendered]
-    > main [0] ./example.js 
-    [0] ./example.js 69 bytes {0} [built]
-    [1] ./increment.js 98 bytes {0} [built]
-        cjs require ./increment [0] ./example.js 1:10-32
+    > main [1] ./example.js 
+    [0] ./increment.js 98 bytes {0} [built]
+        cjs require ./increment [1] ./example.js 1:10-32
+    [1] ./example.js 69 bytes {0} [built]
     [2] ./math.js 162 bytes {0} [built]
-        cjs require ./math [1] ./increment.js 1:10-27
+        cjs require ./math [0] ./increment.js 1:10-27
 ```
 
 ## Minimized (uglify-js, no zip)
 
 ```
-Hash: f20c1cdaf768293603f5
-Version: webpack 1.9.10
-Time: 197ms
+Hash: 604c5c1fe4f4a9772853
+Version: webpack 2.1.0-beta.11
+Time: 115ms
     Asset       Size  Chunks             Chunk Names
-output.js  419 bytes       0  [emitted]  main
+output.js  438 bytes       0  [emitted]  main
 chunk    {0} output.js (main) 329 bytes [rendered]
-    > main [0] ./example.js 
-    [0] ./example.js 69 bytes {0} [built]
-    [1] ./increment.js 98 bytes {0} [built]
-        cjs require ./increment [0] ./example.js 1:10-32
+    > main [1] ./example.js 
+    [0] ./increment.js 98 bytes {0} [built]
+        cjs require ./increment [1] ./example.js 1:10-32
+    [1] ./example.js 69 bytes {0} [built]
     [2] ./math.js 162 bytes {0} [built]
-        cjs require ./math [1] ./increment.js 1:10-27
+        cjs require ./math [0] ./increment.js 1:10-27
 ```

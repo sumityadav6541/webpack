@@ -47,16 +47,16 @@ module.exports = function(content) {
 
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = installedModules[moduleId] = {
-/******/ 			exports: {},
-/******/ 			id: moduleId,
-/******/ 			loaded: false
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
 /******/ 		};
 
 /******/ 		// Execute the module function
 /******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
 
 /******/ 		// Flag the module as loaded
-/******/ 		module.loaded = true;
+/******/ 		module.l = true;
 
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
@@ -69,26 +69,26 @@ module.exports = function(content) {
 /******/ 	// expose the module cache
 /******/ 	__webpack_require__.c = installedModules;
 
+/******/ 	// identity function for calling harmory imports with the correct context
+/******/ 	__webpack_require__.i = function(value) { return value; };
+
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "js/";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(0);
+/******/ 	return __webpack_require__(__webpack_require__.s = 2);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
-/*!********************!*\
-  !*** ./example.js ***!
-  \********************/
-/***/ function(module, exports, __webpack_require__) {
+/*!*******************************************!*\
+  !*** (webpack)/~/json-loader!./test.json ***!
+  \*******************************************/
+/***/ function(module, exports) {
 
-	// use our loader
-	console.dir(__webpack_require__(/*! ./loader!./file */ 1));
-
-	// use buildin json loader
-	console.dir(__webpack_require__(/*! ./test.json */ 2)); // default by extension
-	console.dir(__webpack_require__(/*! json!./test.json */ 2)); // manual
+	module.exports = {
+		"foobar": 1234
+	};
 
 /***/ },
 /* 1 */
@@ -102,14 +102,17 @@ module.exports = function(content) {
 
 /***/ },
 /* 2 */
-/*!*******************************************!*\
-  !*** (webpack)/~/json-loader!./test.json ***!
-  \*******************************************/
-/***/ function(module, exports) {
+/*!********************!*\
+  !*** ./example.js ***!
+  \********************/
+/***/ function(module, exports, __webpack_require__) {
 
-	module.exports = {
-		"foobar": 1234
-	}
+	// use our loader
+	console.dir(__webpack_require__(/*! ./loader!./file */ 1));
+
+	// use buildin json loader
+	console.dir(__webpack_require__(/*! ./test.json */ 0)); // default by extension
+	console.dir(__webpack_require__(/*! json!./test.json */ 0)); // manual
 
 /***/ }
 /******/ ]);
@@ -130,35 +133,35 @@ Prints in node.js (`enhanced-require example.js`) and in browser:
 ## Uncompressed
 
 ```
-Hash: b7795109258519c88313
-Version: webpack 1.9.10
-Time: 106ms
+Hash: ce3e1279e28ab4e51a8d
+Version: webpack 2.1.0-beta.11
+Time: 89ms
     Asset     Size  Chunks             Chunk Names
-output.js  2.19 kB       0  [emitted]  main
-chunk    {0} output.js (main) 282 bytes [rendered]
-    > main [0] ./example.js 
-    [0] ./example.js 205 bytes {0} [built]
-    [1] ./loader.js!./file.js 41 bytes {0} [not cacheable] [built]
-        cjs require ./loader!./file [0] ./example.js 2:12-38
-    [2] (webpack)/~/json-loader!./test.json 36 bytes {0} [built]
-        cjs require !json!./test.json [0] ./example.js 6:12-40
-        cjs require ./test.json [0] ./example.js 5:12-34
+output.js  2.36 kB       0  [emitted]  main
+chunk    {0} output.js (main) 283 bytes [rendered]
+    > main [2] ./example.js 
+    [0] (webpack)/~/json-loader!./test.json 37 bytes {0} [built]
+        cjs require !json!./test.json [2] ./example.js 6:12-40
+        cjs require ./test.json [2] ./example.js 5:12-34
+    [1] ./loader.js!./file.js 41 bytes {0} [built]
+        cjs require ./loader!./file [2] ./example.js 2:12-38
+    [2] ./example.js 205 bytes {0} [built]
 ```
 
 ## Minimized (uglify-js, no zip)
 
 ```
-Hash: 8ae83d82089bb36260e9
-Version: webpack 1.9.10
-Time: 252ms
+Hash: ce3e1279e28ab4e51a8d
+Version: webpack 2.1.0-beta.11
+Time: 180ms
     Asset       Size  Chunks             Chunk Names
-output.js  354 bytes       0  [emitted]  main
-chunk    {0} output.js (main) 282 bytes [rendered]
-    > main [0] ./example.js 
-    [0] ./example.js 205 bytes {0} [built]
-    [1] (webpack)/~/json-loader!./test.json 36 bytes {0} [built]
-        cjs require !json!./test.json [0] ./example.js 6:12-40
-        cjs require ./test.json [0] ./example.js 5:12-34
-    [2] ./loader.js!./file.js 41 bytes {0} [not cacheable] [built]
-        cjs require ./loader!./file [0] ./example.js 2:12-38
+output.js  373 bytes       0  [emitted]  main
+chunk    {0} output.js (main) 283 bytes [rendered]
+    > main [2] ./example.js 
+    [0] (webpack)/~/json-loader!./test.json 37 bytes {0} [built]
+        cjs require !json!./test.json [2] ./example.js 6:12-40
+        cjs require ./test.json [2] ./example.js 5:12-34
+    [1] ./loader.js!./file.js 41 bytes {0} [built]
+        cjs require ./loader!./file [2] ./example.js 2:12-38
+    [2] ./example.js 205 bytes {0} [built]
 ```

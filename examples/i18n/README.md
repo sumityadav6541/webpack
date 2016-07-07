@@ -62,16 +62,16 @@ module.exports = Object.keys(languages).map(function(language) {
 
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = installedModules[moduleId] = {
-/******/ 			exports: {},
-/******/ 			id: moduleId,
-/******/ 			loaded: false
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
 /******/ 		};
 
 /******/ 		// Execute the module function
 /******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
 
 /******/ 		// Flag the module as loaded
-/******/ 		module.loaded = true;
+/******/ 		module.l = true;
 
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
@@ -84,11 +84,14 @@ module.exports = Object.keys(languages).map(function(language) {
 /******/ 	// expose the module cache
 /******/ 	__webpack_require__.c = installedModules;
 
+/******/ 	// identity function for calling harmory imports with the correct context
+/******/ 	__webpack_require__.i = function(value) { return value; };
+
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "js/";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(0);
+/******/ 	return __webpack_require__(__webpack_require__.s = 0);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -121,16 +124,16 @@ module.exports = Object.keys(languages).map(function(language) {
 
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = installedModules[moduleId] = {
-/******/ 			exports: {},
-/******/ 			id: moduleId,
-/******/ 			loaded: false
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
 /******/ 		};
 
 /******/ 		// Execute the module function
 /******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
 
 /******/ 		// Flag the module as loaded
-/******/ 		module.loaded = true;
+/******/ 		module.l = true;
 
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
@@ -143,11 +146,14 @@ module.exports = Object.keys(languages).map(function(language) {
 /******/ 	// expose the module cache
 /******/ 	__webpack_require__.c = installedModules;
 
+/******/ 	// identity function for calling harmory imports with the correct context
+/******/ 	__webpack_require__.i = function(value) { return value; };
+
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "js/";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(0);
+/******/ 	return __webpack_require__(__webpack_require__.s = 0);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -169,26 +175,23 @@ module.exports = Object.keys(languages).map(function(language) {
 ## Uncompressed
 
 ```
-Hash: 10b995417061f97b4ba67e868bed7a01e88b0dbe
-Version: webpack 1.9.10
-
-WARNING in (de) ./example.js
-Missing localization: Missing Text
+Hash: 8376e07a0433da19dc73e2c5e5181623bc3405eb
+Version: webpack 2.1.0-beta.11
 Child en:
-    Hash: 10b995417061f97b4ba6
-    Version: webpack 1.9.10
-    Time: 62ms
+    Hash: 8376e07a0433da19dc73
+    Version: webpack 2.1.0-beta.11
+    Time: 51ms
            Asset     Size  Chunks             Chunk Names
-    en.output.js  1.55 kB       0  [emitted]  main
+    en.output.js  1.71 kB       0  [emitted]  main
     chunk    {0} en.output.js (main) 65 bytes [rendered]
         > main [0] ./example.js 
         [0] ./example.js 65 bytes {0} [built]
 Child de:
-    Hash: 7e868bed7a01e88b0dbe
-    Version: webpack 1.9.10
-    Time: 51ms
+    Hash: e2c5e5181623bc3405eb
+    Version: webpack 2.1.0-beta.11
+    Time: 42ms
            Asset     Size  Chunks             Chunk Names
-    de.output.js  1.55 kB       0  [emitted]  main
+    de.output.js  1.71 kB       0  [emitted]  main
     chunk    {0} de.output.js (main) 65 bytes [rendered]
         > main [0] ./example.js 
         [0] ./example.js 65 bytes {0} [built] [1 warning]
@@ -200,26 +203,23 @@ Child de:
 ## Minimized (uglify-js, no zip)
 
 ```
-Hash: 10b995417061f97b4ba67e868bed7a01e88b0dbe
-Version: webpack 1.9.10
-
-WARNING in (de) ./example.js
-Missing localization: Missing Text
+Hash: 8376e07a0433da19dc73e2c5e5181623bc3405eb
+Version: webpack 2.1.0-beta.11
 Child en:
-    Hash: 10b995417061f97b4ba6
-    Version: webpack 1.9.10
-    Time: 179ms
+    Hash: 8376e07a0433da19dc73
+    Version: webpack 2.1.0-beta.11
+    Time: 124ms
            Asset       Size  Chunks             Chunk Names
-    en.output.js  277 bytes       0  [emitted]  main
+    en.output.js  296 bytes       0  [emitted]  main
     chunk    {0} en.output.js (main) 65 bytes [rendered]
         > main [0] ./example.js 
         [0] ./example.js 65 bytes {0} [built]
 Child de:
-    Hash: 7e868bed7a01e88b0dbe
-    Version: webpack 1.9.10
-    Time: 168ms
+    Hash: e2c5e5181623bc3405eb
+    Version: webpack 2.1.0-beta.11
+    Time: 113ms
            Asset       Size  Chunks             Chunk Names
-    de.output.js  276 bytes       0  [emitted]  main
+    de.output.js  295 bytes       0  [emitted]  main
     chunk    {0} de.output.js (main) 65 bytes [rendered]
         > main [0] ./example.js 
         [0] ./example.js 65 bytes {0} [built] [1 warning]

@@ -57,7 +57,7 @@ module.exports = {
 		var a = typeof exports === 'object' ? factory(require("add"), require("./math")["subtract"]) : factory(root["add"], root["subtract"]);
 		for(var i in a) (typeof exports === 'object' ? exports : root)[i] = a[i];
 	}
-})(this, function(__WEBPACK_EXTERNAL_MODULE_1__, __WEBPACK_EXTERNAL_MODULE_2__) {
+})(this, function(__WEBPACK_EXTERNAL_MODULE_0__, __WEBPACK_EXTERNAL_MODULE_1__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -71,16 +71,16 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = installedModules[moduleId] = {
-/******/ 			exports: {},
-/******/ 			id: moduleId,
-/******/ 			loaded: false
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
 /******/ 		};
 
 /******/ 		// Execute the module function
 /******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
 
 /******/ 		// Flag the module as loaded
-/******/ 		module.loaded = true;
+/******/ 		module.l = true;
 
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
@@ -93,42 +93,45 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// expose the module cache
 /******/ 	__webpack_require__.c = installedModules;
 
+/******/ 	// identity function for calling harmory imports with the correct context
+/******/ 	__webpack_require__.i = function(value) { return value; };
+
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "js/";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(0);
+/******/ 	return __webpack_require__(__webpack_require__.s = 2);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
-/*!********************!*\
-  !*** ./example.js ***!
-  \********************/
-/***/ function(module, exports, __webpack_require__) {
-
-	var add = __webpack_require__(/*! add */ 1);
-	var subtract = __webpack_require__(/*! subtract */ 2);
-
-	exports.exampleValue = subtract(add(42, 2), 2);
-
-/***/ },
-/* 1 */
 /*!**********************!*\
   !*** external "add" ***!
   \**********************/
+/***/ function(module, exports) {
+
+	module.exports = __WEBPACK_EXTERNAL_MODULE_0__;
+
+/***/ },
+/* 1 */
+/*!***************************************************************************************************************!*\
+  !*** external {"root":"subtract","commonjs2":"./subtract","commonjs":["./math","subtract"],"amd":"subtract"} ***!
+  \***************************************************************************************************************/
 /***/ function(module, exports) {
 
 	module.exports = __WEBPACK_EXTERNAL_MODULE_1__;
 
 /***/ },
 /* 2 */
-/*!***************************************************************************************************************!*\
-  !*** external {"root":"subtract","commonjs2":"./subtract","commonjs":["./math","subtract"],"amd":"subtract"} ***!
-  \***************************************************************************************************************/
-/***/ function(module, exports) {
+/*!********************!*\
+  !*** ./example.js ***!
+  \********************/
+/***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __WEBPACK_EXTERNAL_MODULE_2__;
+	var add = __webpack_require__(/*! add */ 0);
+	var subtract = __webpack_require__(/*! subtract */ 1);
+
+	exports.exampleValue = subtract(add(42, 2), 2);
 
 /***/ }
 /******/ ])
@@ -141,27 +144,27 @@ return /******/ (function(modules) { // webpackBootstrap
 ## Uncompressed
 
 ```
-Hash: 320ff2cedec78f734047
-Version: webpack 1.9.10
-Time: 67ms
+Hash: 94d30510034c2c70a921
+Version: webpack 2.1.0-beta.11
+Time: 48ms
     Asset     Size  Chunks             Chunk Names
-output.js  2.88 kB       0  [emitted]  main
+output.js  3.05 kB       0  [emitted]  main
 chunk    {0} output.js (main) 197 bytes [rendered]
-    > main [0] ./example.js 
-    [0] ./example.js 113 bytes {0} [built]
+    > main [2] ./example.js 
+    [2] ./example.js 113 bytes {0} [built]
      + 2 hidden modules
 ```
 
 ## Minimized (uglify-js, no zip)
 
 ```
-Hash: 320ff2cedec78f734047
-Version: webpack 1.9.10
-Time: 170ms
+Hash: 94d30510034c2c70a921
+Version: webpack 2.1.0-beta.11
+Time: 109ms
     Asset       Size  Chunks             Chunk Names
-output.js  710 bytes       0  [emitted]  main
+output.js  729 bytes       0  [emitted]  main
 chunk    {0} output.js (main) 197 bytes [rendered]
-    > main [0] ./example.js 
-    [0] ./example.js 113 bytes {0} [built]
+    > main [2] ./example.js 
+    [2] ./example.js 113 bytes {0} [built]
      + 2 hidden modules
 ```
